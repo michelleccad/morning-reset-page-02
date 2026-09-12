@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#f6f2e9">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<title>Morning Reset ☀️</title>
+<style>
+:root{--bg:#f6f2e9;--paper:#fffdf8;--ink:#26332d;--muted:#7b847f;--sage:#789982;--sageLight:#dce8dc;--warm:#f2c9aa;--line:#e7e2d8}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:linear-gradient(180deg,#f6f2e9 0%,#edf3ed 100%);color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display","Helvetica Neue",Arial,sans-serif;-webkit-font-smoothing:antialiased}
+main{width:min(100%,540px);margin:auto;padding:calc(22px + env(safe-area-inset-top)) 18px calc(40px + env(safe-area-inset-bottom))}
+.hero{padding:12px 4px 20px}.eyebrow{text-transform:uppercase;letter-spacing:.18em;font-size:10px;font-weight:800;color:var(--sage)}
+h1{font-size:40px;line-height:1;letter-spacing:-.05em;margin:8px 0}.hello{font-size:17px;color:var(--muted);margin:0;line-height:1.45}
+.card{background:rgba(255,253,248,.95);border:1px solid rgba(231,226,216,.95);border-radius:26px;padding:20px;margin:12px 0;box-shadow:0 12px 32px rgba(48,61,53,.075)}
+.row{display:flex;align-items:center;justify-content:space-between;gap:12px}.label{text-transform:uppercase;letter-spacing:.1em;font-size:11px;color:var(--muted);font-weight:800}.date{font-size:13px;color:var(--muted);margin-top:3px}.bigscore{font-size:28px;font-weight:850}.bigscore small{font-size:11px;color:var(--muted)}
+.progress{height:8px;background:#ece8df;border-radius:99px;margin-top:13px;overflow:hidden}.progress>div{height:100%;width:0;background:var(--sage);border-radius:99px;transition:.3s}
+.intention{background:linear-gradient(135deg,#edf4ed,#fff9ef);}.intention p{font-size:21px;line-height:1.3;font-weight:750;margin:8px 0 14px}.intentbtn{background:var(--sageLight);color:var(--ink);border-radius:13px;padding:10px 13px;font-size:13px;font-weight:750}
+.verse{font-size:19px;line-height:1.4;font-weight:750;margin:7px 0}.ref{font-size:13px;color:var(--muted)}
+.step{display:flex;align-items:center;gap:12px;padding:14px 0;border-bottom:1px solid var(--line)}.step:last-child{border-bottom:0;padding-bottom:2px}.icon{width:44px;height:44px;border-radius:15px;background:var(--sageLight);display:grid;place-items:center;font-size:21px;flex:none}.step b{display:block;font-size:16px;margin-bottom:3px}.step span{display:block;font-size:13px;color:var(--muted);line-height:1.35}.check{margin-left:auto;width:30px;height:30px;border-radius:50%;border:1.5px solid #cbd3cd;background:#fff;flex:none}.check.done{background:var(--sage);border-color:var(--sage)}.check.done:after{content:"✓";color:#fff;font-size:17px;font-weight:800}
+.primary{width:100%;border:0;background:var(--ink);color:#fff;border-radius:18px;padding:17px;font-size:16px;font-weight:800;box-shadow:0 9px 20px rgba(38,51,45,.17)}button{font:inherit;cursor:pointer;-webkit-tap-highlight-color:transparent}
+.timer{text-align:center;display:none}.timer.show{display:block}.timerNum{font-size:62px;font-weight:850;letter-spacing:-.06em;font-variant-numeric:tabular-nums;margin:3px 0 8px}.secondary{border:0;background:#eef2ed;color:var(--ink);border-radius:13px;padding:11px 14px;font-size:13px;font-weight:750}
+.days{display:grid;grid-template-columns:repeat(10,1fr);gap:7px;margin-top:14px}.dot{aspect-ratio:1;border-radius:50%;background:#ece9e1;display:grid;place-items:center;font-size:10px;color:#a5aaa6}.dot.done{background:var(--sage);color:#fff;font-weight:800}.finish{display:none;text-align:center;background:linear-gradient(135deg,#e6f0e5,#fff3e6)}.finish.show{display:block}.finish .emoji{font-size:38px}.finish h2{margin:5px 0;font-size:25px}.finish p{margin:0;color:var(--muted);font-size:14px}
+.footer{text-align:center;color:#9aa09c;font-size:11px;margin-top:20px}.toast{position:fixed;left:50%;bottom:calc(24px + env(safe-area-inset-bottom));transform:translate(-50%,18px);background:var(--ink);color:#fff;padding:12px 17px;border-radius:15px;font-size:13px;font-weight:750;opacity:0;pointer-events:none;transition:.25s;z-index:10}.toast.show{opacity:1;transform:translate(-50%,0)}
+</style>
+</head>
+<body>
+<main>
+<section class="hero"><div class="eyebrow">Your morning ritual</div><h1>Morning Reset ☀️</h1><p class="hello">Good morning. This is your time to wake your body, clear your mind, and begin the day gently.</p></section>
+
+<section class="card"><div class="row"><div><div class="label">Today</div><div class="date" id="date"></div></div><div class="bigscore"><span id="count">0</span><small>/5</small></div></div><div class="progress"><div id="bar"></div></div></section>
+
+<section class="card intention"><div class="label">Today's intention</div><p id="intention"></p><button class="intentbtn" id="newIntent">Give me another</button></section>
+
+<section class="card"><div class="label" id="weekLabel">Week 1 • Begin gently</div><p class="verse" id="verse"></p><div class="ref" id="ref"></div></section>
+
+<section class="card"><div class="label">Your reset • 15 minutes</div>
+<div class="step" data-i="0"><div class="icon">💧</div><div><b>Wake + water</b><span>Feet on the floor. Drink one glass of water.</span></div><button class="check"></button></div>
+<div class="step" data-i="1"><div class="icon">🎵</div><div><b>Wake your body</b><span>5 minutes of gentle movement and marching.</span></div><button class="check"></button></div>
+<div class="step" data-i="2"><div class="icon">🚶‍♀️</div><div><b>Morning walk</b><span>8–10 minutes. Easy pace. Get some morning light.</span></div><button class="check"></button></div>
+<div class="step" data-i="3"><div class="icon">🌬️</div><div><b>Clear your head</b><span>Three slow breaths. Notice where you are.</span></div><button class="check"></button></div>
+<div class="step" data-i="4"><div class="icon">☕</div><div><b>Enjoy the reward</b><span>Coffee, tea, breakfast — enjoy it without guilt.</span></div><button class="check"></button></div>
+</section>
+
+<section class="card timer" id="timer"><div class="label">10-minute walking timer</div><div class="timerNum" id="time">10:00</div><button class="secondary" id="timerBtn">Start</button> <button class="secondary" id="timerReset">Reset</button></section>
+
+<button class="primary" id="start">☀️ Start my morning</button>
+
+<section class="card finish" id="finish"><div class="emoji">🌿✨</div><h2>You showed up for yourself.</h2><p>That's the win. Carry that feeling into your day.</p></section>
+
+<section class="card"><div class="label">30-day journey</div><div class="date">One morning at a time.</div><div class="days" id="days"></div></section>
+
+<p class="footer">Keep it gentle. Keep it consistent. 🙏</p>
+</main><div class="toast" id="toast"></div>
+
+<script>
+const KEY="morning-reset-v3";
+const intentions=["Today I choose calm over hurry.","I will take care of my body with kindness.","I don't need to do everything at once.","Today I will make space for what matters.","I am allowed to begin slowly.","Small steps still move me forward.","I will give myself the same grace I give others.","Today I choose presence over perfection."];
+const verses=[
+["“I can do all things through Christ who strengthens me.”","Philippians 4:13","Strength"],
+["“Come to me, all you who are weary and burdened, and I will give you rest.”","Matthew 11:28","Rest & renewal"],
+["“She is clothed with strength and dignity; she can laugh at the days to come.”","Proverbs 31:25","Strength & confidence"],
+["“He gives strength to the weary and increases the power of the weak.”","Isaiah 40:29","Energy & endurance"],
+["“Let us run with perseverance the race marked out for us.”","Hebrews 12:1","Perseverance"]
+];
+let s=JSON.parse(localStorage.getItem(KEY)||'{"steps":[],"days":0}');
+const today=new Date();document.getElementById("date").textContent=today.toLocaleDateString(undefined,{weekday:"long",month:"long",day:"numeric"});
+let intentIndex=today.getDate()%intentions.length;document.getElementById("intention").textContent=intentions[intentIndex];
+document.getElementById("newIntent").onclick=()=>{intentIndex=(intentIndex+1)%intentions.length;document.getElementById("intention").textContent=intentions[intentIndex]};
+function week(){return Math.min(4,Math.floor(s.days/7))}
+function save(){localStorage.setItem(KEY,JSON.stringify(s));render()}
+function render(){
+ const n=s.steps.length;document.getElementById("count").textContent=n;document.getElementById("bar").style.width=(n/5*100)+"%";
+ document.querySelectorAll(".step").forEach((x,i)=>x.querySelector(".check").classList.toggle("done",s.steps.includes(i)));
+ let w=week(),v=verses[w];document.getElementById("weekLabel").textContent=`Week ${w+1} • ${v[2]}`;document.getElementById("verse").textContent=v[0];document.getElementById("ref").textContent=v[1]+" • "+v[2];
+ let d=document.getElementById("days");d.innerHTML="";for(let i=0;i<30;i++){let x=document.createElement("div");x.className="dot"+(i<s.days?" done":"");x.textContent=i+1;d.appendChild(x)}
+}
+function toast(t){let e=document.getElementById("toast");e.textContent=t;e.classList.add("show");setTimeout(()=>e.classList.remove("show"),2300)}
+document.querySelectorAll(".step").forEach(x=>x.addEventListener("click",()=>{let i=+x.dataset.i;s.steps=s.steps.includes(i)?s.steps.filter(n=>n!==i):[...s.steps,i];if(s.steps.length===5){s.days=Math.min(30,s.days+1);s.steps=[];document.getElementById("finish").classList.add("show");toast("Morning reset complete 🌿");}save()}));
+document.getElementById("start").onclick=()=>{document.getElementById("timer").classList.add("show");document.getElementById("timer").scrollIntoView({behavior:"smooth",block:"center"});toast("You started. That was the hardest part. ☀️")};
+let sec=600,timer=null;function draw(){document.getElementById("time").textContent=String(Math.floor(sec/60)).padStart(2,"0")+":"+String(sec%60).padStart(2,"0")}
+document.getElementById("timerBtn").onclick=()=>{if(timer){clearInterval(timer);timer=null;document.getElementById("timerBtn").textContent="Resume"}else{document.getElementById("timerBtn").textContent="Pause";timer=setInterval(()=>{sec--;draw();if(sec<=0){clearInterval(timer);timer=null;toast("Walk complete. Nice work. 🌿");document.getElementById("timerBtn").textContent="Start again"}},1000)}};
+document.getElementById("timerReset").onclick=()=>{clearInterval(timer);timer=null;sec=600;draw();document.getElementById("timerBtn").textContent="Start"};
+draw();render();
+</script>
+</body></html>
